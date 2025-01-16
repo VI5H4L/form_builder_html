@@ -1,135 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Form Builder</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .form-container { max-width: 500px; margin: auto; }
-        .input-group { margin-bottom: 10px; }
-        label { font-size: 14px; display: block; margin-bottom: 5px; }
-        input, select, button { width: 100%; padding: 6px; margin-bottom: 10px; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
-        th { background: #f9f9f9; }
-        #generatedForm { margin-top: 20px; padding: 10px; border: 1px solid #ddd; }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <h2>Form Builder</h2>
-        <form id="formBuilder">
-            <div class="input-group">
-                <label for="inputName">Input Name:</label>
-                <input type="text" id="inputName" required>
-            </div>
-            <div class="input-group">
-                <label for="inputType">Input Type:</label>
-                <select id="inputType" required>
-                    <option value="text">Text</option>
-                    <option value="radio">Radio</option>
-                    <option value="email">Email</option>
-                    <option value="dropdown">Dropdown</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="file">File</option>
-                    <option value="number">Number</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="required">Required:</label>
-                <select id="required">
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="inputLabel">Input Label:</label>
-                <input type="text" id="inputLabel" required>
-            </div>
-            <button type="button" onclick="addElement()">Add Element</button>
-        </form>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Required</th>
-                    <th>Label</th>
-                </tr>
-            </thead>
-            <tbody id="elementTableBody"></tbody>
-        </table>
-        <button onclick="createForm()">Create Form</button>
-        <div id="generatedForm"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Builder - Vishal Kumar</title>=
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Form Builder - Vishal Kumar</h2>
+      <form id="formBuilder">
+        <div class="input-group">
+          <label for="inputName">Input Name:</label>
+          <input type="text" id="inputName" required />
+        </div>
+        <div class="input-group">
+          <label for="inputType">Input Type:</label>
+          <select id="inputType" required>
+            <option value="text">Text</option>
+            <option value="radio">Radio</option>
+            <option value="email">Email</option>
+            <option value="dropdown">Dropdown</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="file">File</option>
+            <option value="number">Number</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="required">Required:</label>
+          <select id="required">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="inputLabel">Input Label:</label>
+          <input type="text" id="inputLabel" required />
+        </div>
+        <button type="button" onclick="addElement()">Add Element</button>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Label</th>
+          </tr>
+        </thead>
+        <tbody id="elementTableBody"></tbody>
+      </table>
+      <button onclick="createForm()">Generate Form HTML</button>
+      <div id="generatedForm"></div>
     </div>
     <script>
-        function addElement() {
-            const inputName = document.getElementById('inputName').value;
-            const inputType = document.getElementById('inputType').value;
-            const required = document.getElementById('required').value;
-            const inputLabel = document.getElementById('inputLabel').value;
+      function addElement() {
+        const inputName = document.getElementById("inputName").value;
+        const inputType = document.getElementById("inputType").value;
+        const required = document.getElementById("required").value;
+        const inputLabel = document.getElementById("inputLabel").value;
 
-            if (!inputName || !inputLabel) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            const tableBody = document.getElementById('elementTableBody');
-            const newRow = tableBody.insertRow();
-            
-            newRow.insertCell(0).textContent = inputName;
-            newRow.insertCell(1).textContent = inputType;
-            newRow.insertCell(2).textContent = required === "true" ? "Yes" : "No";
-            newRow.insertCell(3).textContent = inputLabel;
-
-            document.getElementById('formBuilder').reset();
+        if (!inputName || !inputLabel) {
+          alert("Please fill in all fields");
+          return;
         }
 
-        function createForm() {
-            const tableBody = document.getElementById('elementTableBody');
-            const rows = tableBody.rows;
-            const formContainer = document.getElementById('generatedForm');
+        const tableBody = document.getElementById("elementTableBody");
+        const newRow = tableBody.insertRow();
 
-            formContainer.innerHTML = '<h3>Generated Form</h3>';
+        newRow.insertCell(0).textContent = inputName;
+        newRow.insertCell(1).textContent = inputType;
+        newRow.insertCell(2).textContent = required === "true" ? "Yes" : "No";
+        newRow.insertCell(3).textContent = inputLabel;
 
-            const form = document.createElement('form');
-            form.setAttribute('id', 'dynamicForm');
+        document.getElementById("formBuilder").reset();
+      }
 
-            for (let i = 0; i < rows.length; i++) {
-                const name = rows[i].cells[0].textContent;
-                const type = rows[i].cells[1].textContent;
-                const required = rows[i].cells[2].textContent === "Yes";
-                const label = rows[i].cells[3].textContent;
+      function createForm() {
+        const tableBody = document.getElementById("elementTableBody");
+        const rows = tableBody.rows;
+        const formContainer = document.getElementById("generatedForm");
 
-                const labelElement = document.createElement('label');
-                labelElement.textContent = label;
+        formContainer.innerHTML = "<h3>Generated Form HTML</h3>";
 
-                let inputElement;
+        let formHTML = '<form id="dynamicForm">\n';
 
-                if (type === "dropdown") {
-                    inputElement = document.createElement('select');
-                    const option1 = document.createElement('option');
-                    option1.value = "Option 1";
-                    option1.textContent = "Option 1";
-                    inputElement.appendChild(option1);
-                } else {
-                    inputElement = document.createElement('input');
-                    inputElement.type = type;
-                }
+        for (let i = 0; i < rows.length; i++) {
+          const name = rows[i].cells[0].textContent;
+          const type = rows[i].cells[1].textContent;
+          const required = rows[i].cells[2].textContent === "Yes";
+          const label = rows[i].cells[3].textContent;
 
-                inputElement.name = name;
-                if (required) {
-                    inputElement.setAttribute('required', true);
-                }
+          formHTML += `  <label for="${name}">${label}</label>\n`;
 
-                form.appendChild(labelElement);
-                form.appendChild(inputElement);
-                form.appendChild(document.createElement('br'));
-            }
-
-            formContainer.appendChild(form);
+          if (type === "dropdown") {
+            formHTML += `  <select name="${name}" id="${name}"${
+              required ? " required" : ""
+            }>\n`;
+            formHTML += `    <option value="Option 1">Option 1</option>\n`;
+            formHTML += `  </select>\n`;
+          } else {
+            formHTML += `  <input type="${type}" name="${name}" id="${name}"${
+              required ? " required" : ""
+            }>\n`;
+          }
         }
+
+        formHTML += "</form>";
+
+        const preElement = document.createElement("pre");
+        preElement.textContent = formHTML;
+
+        formContainer.appendChild(preElement);
+      }
     </script>
-</body>
+  </body>
 </html>
